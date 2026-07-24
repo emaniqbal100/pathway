@@ -1,86 +1,55 @@
-"use client";
-
 import Navbar from "@/components/Navbar";
-import Image from "next/image";
-import { useState } from "react";
-import { Check } from "lucide-react";
+import CtaFooter from "@/components/CtaFooter";
 
-export default function SignupPage() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+const updates = [
+  { version: "v2.0", date: "June 2026", title: "Major redesign & dark mode", desc: "A complete visual overhaul, plus native dark mode support across the entire app." },
+  { version: "v1.8", date: "April 2026", title: "Advanced analytics dashboard", desc: "New charts and insights to help you understand your progress at a glance." },
+  { version: "v1.6", date: "February 2026", title: "Custom notifications", desc: "Fine-tune exactly which alerts you receive and when." },
+  { version: "v1.4", date: "December 2025", title: "Integration ecosystem launch", desc: "Connect Pathway with over 20 of your favorite tools." },
+  { version: "v1.2", date: "October 2025", title: "Team collaboration tools", desc: "Assign tasks, leave comments, and track progress together." },
+];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
+export default function UpdatesPage() {
   return (
-    <main className="flex-1 pt-[72px] min-h-screen bg-gradient-to-b from-indigo-50 to-white dark:from-[#12122a] dark:to-[#0B0B14] transition-colors">
+    <main className="flex-1 pt-[72px] bg-white dark:bg-[#0B0B14] transition-colors">
       <Navbar />
 
-      <section className="max-w-md mx-auto px-6 py-20 text-center">
-        <div className="relative w-24 h-24 mx-auto mb-6">
-          <Image src="/images/wheel.png" alt="" fill sizes="96px" className="object-contain drop-shadow-xl float-slow" />
+      <section className="max-w-4xl mx-auto px-6 md:px-10 py-16">
+        <div className="text-center mb-16">
+          <span className="inline-block bg-gray-100 dark:bg-white/10 text-gray-900 dark:text-white text-xs font-medium px-3 py-1.5 rounded-full mb-5">
+            Changelog
+          </span>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-[#0e1030] dark:text-white mb-6">
+            What&apos;s new
+          </h1>
+          <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
+            Every update, big or small — see how Pathway keeps getting better.
+          </p>
         </div>
 
-        <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-[#0e1030] dark:text-white mb-3">
-          Get started for free
-        </h1>
-        <p className="text-gray-500 dark:text-gray-400 mb-10">
-          No credit card required. Set up your account in under a minute.
-        </p>
-
-        {submitted ? (
-          <div className="rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-[#13131f] p-8 shadow-sm">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 flex items-center justify-center mx-auto mb-4">
-              <Check size={22} className="text-white" />
+        <div className="space-y-8">
+          {updates.map((u, i) => (
+            <div key={u.version} className="relative pl-10">
+              <span className="absolute left-0 top-1 w-4 h-4 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500" />
+              {i !== updates.length - 1 && (
+                <span className="absolute left-[7px] top-5 bottom-[-2rem] w-px bg-gray-200 dark:bg-white/10" />
+              )}
+              <div className="rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-[#13131f] p-6 shadow-sm">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-500/15 text-indigo-600 dark:text-indigo-300">
+                    {u.version}
+                  </span>
+                  <span className="text-xs text-gray-400 dark:text-gray-500">{u.date}</span>
+                </div>
+                <h3 className="font-semibold text-lg text-[#0e1030] dark:text-white mb-2">{u.title}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{u.desc}</p>
+              </div>
             </div>
-            <h2 className="font-semibold text-lg text-[#0e1030] dark:text-white mb-2">You&apos;re on the list!</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              We&apos;ve sent a confirmation to <span className="font-medium">{email}</span>. Check your inbox to finish setting up.
-            </p>
-          </div>
-        ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-[#13131f] p-8 shadow-sm text-left"
-          >
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Work email
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@company.com"
-              className="w-full rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-900 dark:text-white px-4 py-3 text-sm mb-5 outline-none focus:border-indigo-400 dark:focus:border-indigo-500 transition-colors"
-            />
-            <button
-              type="submit"
-              className="w-full text-center text-sm font-medium py-3 rounded-full bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white shadow-md shadow-indigo-500/30 hover:shadow-lg hover:shadow-indigo-500/50 transition-all"
-            >
-              Create free account
-            </button>
-
-            <ul className="mt-6 space-y-2.5 text-sm text-gray-500 dark:text-gray-400">
-              <li className="flex items-center gap-2">
-                <Check size={14} className="text-indigo-500 shrink-0" /> Up to 5 project members
-              </li>
-              <li className="flex items-center gap-2">
-                <Check size={14} className="text-indigo-500 shrink-0" /> Unlimited tasks and projects
-              </li>
-              <li className="flex items-center gap-2">
-                <Check size={14} className="text-indigo-500 shrink-0" /> 2GB storage included
-              </li>
-            </ul>
-          </form>
-        )}
-
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-8">
-          By signing up, you agree to our Terms and Privacy Policy.
-        </p>
+          ))}
+        </div>
       </section>
+
+      <CtaFooter />
     </main>
   );
 }
